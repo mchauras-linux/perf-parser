@@ -2,24 +2,30 @@ import pprint
 
 class PerfStatParser:
     def __init__(self, file_path=None) -> None:
-        self.file = file_path
-        self.extra_data = ""
-        self.command = ""
-        self.task_clock_cpu_utilized = 0
-        self.task_clock_time_ms = 0
-        self.context_switches = 0
-        self.cpu_migrations = 0
-        self.page_faults = 0
-        self.cycles = 0
-        self.stalled_cycles_frontend = 0
-        self.stalled_cycles_backend = 0
-        self.stalled_cycles_per_insn = 0
-        self.instructions = 0
-        self.branches = 0
-        self.branch_misses = 0
-        self.seconds_time_elapsed = 0
-        self.seconds_user = 0
-        self.seconds_sys = 0
+        if file_path is None:
+            self.file = file_path
+            self.extra_data = ""
+            self.command = ""
+            self.task_clock_cpu_utilized = 0
+            self.task_clock_time_ms = 0
+            self.context_switches = 0
+            self.cpu_migrations = 0
+            self.page_faults = 0
+            self.cycles = 0
+            self.stalled_cycles_frontend = 0
+            self.stalled_cycles_backend = 0
+            self.stalled_cycles_per_insn = 0
+            self.instructions = 0
+            self.branches = 0
+            self.branch_misses = 0
+            self.seconds_time_elapsed = 0
+            self.seconds_user = 0
+            self.seconds_sys = 0
+        else:
+            self.file = file_path
+            self.extra_data = ""
+            self.command = ""
+            self.parse_object()
 
     def __remove_blanks_from_list(self, src):
         filtered_list = [item for item in src if item.strip() != '']
@@ -59,7 +65,7 @@ class PerfStatParser:
                     elif 'stalled cycles per insn' in line:
                         data = self.__remove_blanks_from_list(line.split(' '))
                         self.stalled_cycles_per_insn = float(data[1].replace(',', ''))
-                    elif 'branches' in line:
+                    elif '   branches' in line:
                         data = self.__remove_blanks_from_list(line.split(' '))
                         self.branches = float(data[0].replace(',', ''))
                     elif 'branch-misses' in line:
@@ -82,7 +88,7 @@ class PerfStatParser:
     def print_object(self):
         pprint.pprint(vars(self))
 
-    def __add(self, val):
+    def add_values(self, val):
         self.task_clock_cpu_utilized += val.task_clock_cpu_utilized
         self.task_clock_time_ms += val.task_clock_time_ms
         self.context_switches += val.context_switches
@@ -99,7 +105,9 @@ class PerfStatParser:
         self.seconds_user += val.seconds_user
         self.seconds_sys += val.seconds_sys
 
-    def __div(self, val):
+    def div(self, val):
+        if val == 0:
+            return
         self.task_clock_cpu_utilized /= val
         self.task_clock_time_ms /= val
         self.context_switches /= val
@@ -116,14 +124,58 @@ class PerfStatParser:
         self.seconds_user /= val
         self.seconds_sys /= val
 
-    def take_average_of_data(stat_list):
-        count = 0
-        perf_avg = PerfStatParser()
-        for stat in stat_list:
-            count = count + 1
+    def get_csv(self):
+        csv = ""
+        csv += str(self.task_clock_cpu_utilized) + ","
+        csv += str(self.task_clock_time_ms) + ","
+        csv += str(self.context_switches) + ","
+        csv += str(self.cpu_migrations) + ","
+        csv += str(self.page_faults) + ","
+        csv += str(self.cycles) + ","
+        csv += str(self.stalled_cycles_frontend) + ","
+        csv += str(self.stalled_cycles_backend) + ","
+        csv += str(self.stalled_cycles_per_insn) + ","
+        csv += str(self.instructions) + ","
+        csv += str(self.branches) + ","
+        csv += str(self.branch_misses) + ","
+        csv += str(self.seconds_time_elapsed) + ","
+        csv += str(self.seconds_user) + ","
+        csv += str(self.seconds_sys) + ","
+        return csv
+
+def get_csv_header():
+    csv = ""
+    csv += "task_clock_cpu_utilized"+ ","
+    csv += "task_clock_time_ms"+ ","
+    csv += "context_switches"+ ","
+    csv += "cpu_migrations"+ ","
+    csv += "page_faults"+ ","
+    csv += "cycles"+ ","
+    csv += "stalled_cycles_frontend"+ ","
+    csv += "stalled_cycles_backend"+ ","
+    csv += "stalled_cycles_per_insn"+ ","
+    csv += "instructions"+ ","
+    csv += "branches"+ ","
+    csv += "branch_misses"+ ","
+    csv += "seconds_time_elapsed"+ ","
+    csv += "seconds_user"+ ","
+    csv += "seconds_sys"+ ","
+    return csv
+
+def take_average_of_data(stat_list):
+    count = 0
+    perf_avg = PerfStatParser()
+    for stat in stat_list:
+        count = count + 1
+        try:
             perf_avg.add_values(stat)
-        perf_avg.__div(count)
-        return perf_avg
+        except Exception as e:
+            print(f"An Error occurred: {e}")
+            perf_avg.print_object()
+            stat.print_object()
+            exit(-1)
+    perf_avg.div(count)
+    return perf_avg
 
 
 if __name__ == "__main__":
