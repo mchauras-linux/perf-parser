@@ -29,8 +29,9 @@ for i in range(104, 2081, 104):
     print("Available columns:", column_names)
 
 # Plot the graph
-    plt.figure(figsize=(8, 6))  # Adjust figure size if needed
-    plt.plot(data[x_column], data[y_column])
+    # plt.figure(figsize=(10, 10))  # Adjust figure size if needed
+    plt.figure()
+    plt.scatter(data[x_column], data[y_column])
     plt.title(f"{x_column} vs {y_column} {i} Threads")
     plt.xlabel(x_column)
     plt.ylabel(y_column)
