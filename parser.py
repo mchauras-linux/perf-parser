@@ -13,7 +13,6 @@ def parse_ebizzy_data_get_records(parser):
             if "records" in line:
                 record += int(line.split(" ")[0])
     return str(record/count)
-                
 
 def get_avg_in_dir(path, output):
     # print(path)

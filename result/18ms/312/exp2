@@ -1,0 +1,27 @@
+# started on Wed Jan 10 16:20:38 2024
+
+
+ Performance counter stats for './ebizzy -t 312 -S 30 -s 4096':
+
+      3,123,529.89 msec task-clock                #  103.362 CPUs utilized          
+           130,091      context-switches          #   41.649 /sec                   
+             5,436      cpu-migrations            #    1.740 /sec                   
+             2,042      page-faults               #    0.654 /sec                   
+ 9,501,432,895,018      cycles                    #    3.042 GHz                      (33.35%)
+   349,414,294,637      stalled-cycles-frontend   #    3.68% frontend cycles idle     (50.03%)
+ 6,516,538,275,469      stalled-cycles-backend    #   68.58% backend cycles idle      (16.68%)
+ 3,447,818,379,518      instructions              #    0.36  insn per cycle         
+                                                  #    1.89  stalled cycles per insn  (33.38%)
+   483,088,695,007      branches                  #  154.661 M/sec                    (50.03%)
+    10,736,430,980      branch-misses             #    2.22% of all branches          (16.66%)
+
+      30.219201843 seconds time elapsed
+
+    3122.757311000 seconds user
+       7.329689000 seconds sys
+
+
+84847201 records/s
+real 30.00 s
+user 3116.34 s
+sys   0.62 s

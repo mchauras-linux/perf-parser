@@ -1,27 +1,27 @@
-# started on Sat Dec  2 11:37:54 2023
+# started on Wed Jan 10 14:20:32 2024
 
 
- Performance counter stats for './ebizzy -t 416 -S 120':
+ Performance counter stats for './ebizzy -t 416 -S 30 -s 4096':
 
-     12,484,601.73 msec task-clock                #  103.839 CPUs utilized          
-         1,237,622      context-switches          #   99.132 /sec                   
-            31,292      cpu-migrations            #    2.506 /sec                   
-            18,487      page-faults               #    1.481 /sec                   
-37,981,302,705,297      cycles                    #    3.042 GHz                      (33.34%)
-   275,096,451,396      stalled-cycles-frontend   #    0.72% frontend cycles idle     (50.01%)
-27,272,227,001,408      stalled-cycles-backend    #   71.80% backend cycles idle      (16.67%)
-10,323,549,432,826      instructions              #    0.27  insn per cycle         
-                                                  #    2.64  stalled cycles per insn  (33.36%)
-   515,210,946,436      branches                  #   41.268 M/sec                    (50.02%)
-       604,329,740      branch-misses             #    0.12% of all branches          (16.66%)
+      3,127,800.16 msec task-clock                #  103.608 CPUs utilized          
+           311,933      context-switches          #   99.729 /sec                   
+             7,984      cpu-migrations            #    2.553 /sec                   
+             2,556      page-faults               #    0.817 /sec                   
+ 9,509,217,209,189      cycles                    #    3.040 GHz                      (33.36%)
+   352,345,364,423      stalled-cycles-frontend   #    3.71% frontend cycles idle     (50.03%)
+ 6,516,089,647,439      stalled-cycles-backend    #   68.52% backend cycles idle      (16.66%)
+ 3,445,797,838,239      instructions              #    0.36  insn per cycle         
+                                                  #    1.89  stalled cycles per insn  (33.40%)
+   483,225,061,167      branches                  #  154.494 M/sec                    (50.06%)
+    10,744,647,830      branch-misses             #    2.22% of all branches          (16.67%)
 
-     120.230154661 seconds time elapsed
+      30.188657811 seconds time elapsed
 
-   12483.259430000 seconds user
-      10.758079000 seconds sys
+    3126.733108000 seconds user
+       8.549113000 seconds sys
 
 
-989137 records/s
-real 120.00 s
-user 12472.70 s
-sys   0.95 s
+84833440 records/s
+real 30.00 s
+user 3117.84 s
+sys   0.90 s
